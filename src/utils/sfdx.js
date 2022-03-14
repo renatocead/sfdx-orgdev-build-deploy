@@ -44,6 +44,10 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
 let login = function (cert, login){
     core.info("=== login ===");
     core.debug('=== Decrypting certificate');
+    core.debug('=== Key');
+    core.debug(cert.decryptionKey);
+    core.debug('=== IV');
+    core.debug(cert.decryptionIV);
     execCommand.run('openssl', ['enc', '-nosalt', '-aes-256-cbc', '-d', '-in', cert.certificatePath, '-out', 'server.key', '-base64', '-K', cert.decryptionKey, '-iv', cert.decryptionIV]);
 
     core.info('==== Authenticating in the target org');
