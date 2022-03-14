@@ -43,10 +43,10 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
 
 let login = function (cert, login){
     core.info("=== login 2 ===");
-    core.info('=== Decrypting certificate');
-    core.info('=== Key');
+    core.info("=== Decrypting certificate");
+    core.info("=== Key");
     core.info(cert.decryptionKey);
-    core.info('=== IV');
+    core.info("=== IV");
     core.info(cert.decryptionIV);
     execCommand.run('openssl', ['enc', '-nosalt', '-aes-256-cbc', '-d', '-in', cert.certificatePath, '-out', 'server.key', '-base64', '-K', cert.decryptionKey, '-iv', cert.decryptionIV]);
 
