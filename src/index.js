@@ -42,6 +42,9 @@ try {
   //Login to Org
   sfdx.login(cert,login);
 
+  //Convert from Source to Org Dev
+  //sfdx.convert(deploy);
+  
   //Deply/Checkonly to Org
   sfdx.deploy(deploy);
   
