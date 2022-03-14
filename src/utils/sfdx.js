@@ -42,7 +42,7 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
 }
 
 let login = function (cert, login){
-    core.info("=== login ===");
+    core.info("=== login 2 ===");
     core.debug('=== Decrypting certificate');
     core.debug('=== Key');
     core.debug(cert.decryptionKey);
