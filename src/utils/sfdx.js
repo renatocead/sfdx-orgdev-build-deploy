@@ -61,7 +61,7 @@ let convert = function(deploy){
     execCommand.run('mkdir ready2Deploy');
     execCommand.run('sfdx force:source:convert -d ready2Deploy')
     core.info("=== converted ===");
-}
+};
 
 let deploy = function (deploy){
     core.info("=== deploy ===");
