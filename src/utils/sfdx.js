@@ -52,6 +52,13 @@ let login = function (cert, login){
     execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', login.username, '--setalias', 'sfdc']);
 };
 
+let convert = function(deploy){
+    core.info("=== converting ===");
+    execCommand.run('mkdir ready2Deploy');
+    execCommand.run('sfdx force:source:convert -d ready2Deploy')
+    core.info("=== converted ===");
+}
+
 let deploy = function (deploy){
     core.info("=== deploy ===");
 
