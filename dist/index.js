@@ -13573,7 +13573,7 @@ let login = function (cert, login){
     execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', login.username, '--setalias', 'sfdc']);
 };
 
-let convert = function(deploy){
+let convertion = function(deploy){
     core.info("=== converting ===");
     execCommand.run('mkdir ready2Deploy');
     execCommand.run('sfdx force:source:convert -d ready2Deploy')
@@ -13877,7 +13877,7 @@ try {
   sfdx.login(cert,login);
 
   //Convert from Source to Org Dev
-  sfdx.convert(deploy);
+  sfdx.convertion(deploy);
   
   //Deply/Checkonly to Org
   sfdx.deploy(deploy);
