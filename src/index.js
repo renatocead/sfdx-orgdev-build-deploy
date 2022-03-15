@@ -49,10 +49,10 @@ try {
   sfdx.deploy(deploy);
   
   //Destructive deploy
-  sfdx.destructiveDeploy(deploy);
+  //sfdx.destructiveDeploy(deploy);
 
   //Executes data factory script
-  sfdx.dataFactory(deploy);
+  //sfdx.dataFactory(deploy);
   
 } catch (error) {
   core.setFailed(error.message);
