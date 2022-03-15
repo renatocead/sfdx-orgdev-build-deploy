@@ -13589,7 +13589,8 @@ let deploy = function (deploy){
     for(var i = 0; i < manifestsArray.length; i++){
         manifestTmp = manifestsArray[i];
 
-        var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json','-d','/opt/ready2Deploy'];
+        //var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json','-d','/opt/ready2Deploy'];
+        var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--targetusername', 'sfdc', '--json','-p','/opt/ready2Deploy'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
