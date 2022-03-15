@@ -42,12 +42,7 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
 }
 
 let login = function (cert, login){
-    core.info("=== login 2 ===");
-    core.info("=== Decrypting certificate");
-    core.info("=== Key");
-    core.info(cert.decryptionKey);
-    core.info("=== IV");
-    core.info(cert.decryptionIV);
+    core.info("=== login ===");
     execCommand.run('openssl', ['enc', '-nosalt', '-aes-256-cbc', '-d', '-in', cert.certificatePath, '-out', 'server.key', '-base64', '-K', cert.decryptionKey, '-iv', cert.decryptionIV]);
 
     core.info('==== Authenticating in the target org');
@@ -58,7 +53,9 @@ let login = function (cert, login){
 
 let convertion = function(deploy){
     core.info("=== converting ===");
+    core.info("=== creating dir ===");
     execCommand.run('mkdir ready2Deploy');
+    core.info("=== run source convert ===");
     execCommand.run('sfdx force:source:convert -d ready2Deploy')
     core.info("=== converted ===");
 };
