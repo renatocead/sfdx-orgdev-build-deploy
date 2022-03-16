@@ -60,7 +60,7 @@ let convertion = function(deploy){
     core.info("=== converted ===");
 };
 
-let deploy = function (deploy){
+let deploy = function (deploy, login){
     core.info("=== deploy ===");
 
     var manifestsArray = deploy.manifestToDeploy.split(",");
