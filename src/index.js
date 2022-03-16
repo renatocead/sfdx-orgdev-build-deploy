@@ -46,7 +46,7 @@ try {
   sfdx.convertion(deploy);
   
   //Deply/Checkonly to Org
-  sfdx.deploy(deploy);
+  sfdx.deploy(deploy, login);
   
   //Destructive deploy
   //sfdx.destructiveDeploy(deploy);
