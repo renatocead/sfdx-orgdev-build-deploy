@@ -13577,7 +13577,7 @@ let convertion = function(deploy){
     core.info("=== converted ===");
 };
 
-let deploy = function (deploy){
+let deploy = function (deploy, login){
     core.info("=== deploy ===");
 
     var manifestsArray = deploy.manifestToDeploy.split(",");
@@ -13878,7 +13878,7 @@ try {
   sfdx.convertion(deploy);
   
   //Deply/Checkonly to Org
-  sfdx.deploy(deploy);
+  sfdx.deploy(deploy, login);
   
   //Destructive deploy
   //sfdx.destructiveDeploy(deploy);
