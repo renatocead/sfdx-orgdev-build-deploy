@@ -66,7 +66,8 @@ let deploy = function (deploy, login){
     core.info("=== deploy ===");
 
     var manifestsArray = deploy.manifestToDeploy.split(",");
-    var sfdxRootFolder = deploy.sfdxRootFolder;
+    //var sfdxRootFolder = deploy.sfdxRootFolder;
+    var sfdxRootFolder = '/opt/ready2Deploy';
     
     var manifestTmp;
     var testClassesTmp;
