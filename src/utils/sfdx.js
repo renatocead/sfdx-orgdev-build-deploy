@@ -55,10 +55,11 @@ let convertion = function(deploy){
     core.info("=== converting ===");
     core.info("=== creating dir ===");
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
-    execCommand.run('sh', ['-c', 'ls /opt']);
     core.info("=== run source convert ===");
     execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
     core.info("=== converted ===");
+    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy']);
+
     //core.info("=== running GIT Delta ===");
     //execCommand.run('sfdx', ['sgd:source:delta --to Develop --from feature/us0011 --output /opt/ready2Deploy']);
 };
