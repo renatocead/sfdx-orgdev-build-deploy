@@ -13571,7 +13571,7 @@ let login = function (cert, login){
 let convertion = function(deploy){
     core.info("=== converting ===");
     core.info("=== creating dir ===");
-    execCommand.run('mkdir', ['/opt/ready2Deploy']);
+   // execCommand.run('mkdir /opt/ready2Depploy', ['/opt/ready2Deploy']);
     core.info("=== run source convert ===");
     execCommand.run('sfdx', ['force:source:convert -d /opt/ready2Deploy'])
     core.info("=== converted ===");
