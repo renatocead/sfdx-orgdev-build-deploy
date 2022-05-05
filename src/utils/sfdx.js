@@ -63,8 +63,8 @@ let convertion = function(deploy){
 
     core.info("=== running GIT Delta ===");
     execCommand.run('sfdx', ['sgd:source:delta --to "HEAD" --from "Develop" --output /opt/ready2Deploy']);
+    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy
     execCommand.run('sh', ['-c', 'mv /opt/ready2Deploy/destructiveChanges/ /opt/ready2Deploy/package']);
-    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy/package']);
 };
 
 let deploy = function (deploy, login){
