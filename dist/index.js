@@ -13509,7 +13509,7 @@ var fnInstallSFDX = function(){
     execCommand.run('sfdx', ['--version']);
     core.info('=== SFDX install GIT delta ===');
     execCommand.run('echo', ['[\"sfdx-git-delta\"]','>','$HOME/.config/sfdx']);
-    execCommand.run('printf', ['$s', '$($HOME/.config/sfdx)']);
+    execCommand.run('printf', ['$($HOME/.config/sfdx)']);
     execCommand.run('sfdx', ['plugins:install', 'sfdx-git-delta']);
     core.info('=== SFDX GIT Delta installed ===');
     execCommand.run('sfdx',['plugins','--core']);
