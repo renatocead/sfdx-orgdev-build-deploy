@@ -13506,6 +13506,7 @@ var fnInstallSFDX = function(){
     //execCommand.run('export PATH=~/sfdx/bin:$PATH', []);
     execCommand.run('npm', ['install','sfdx-cli','--global']);
     core.info('=== SFDX cli installed ===');
+    execCommand.run('sfdx', ['--version']);
 };
 
 module.exports.install = function(command, args) {
