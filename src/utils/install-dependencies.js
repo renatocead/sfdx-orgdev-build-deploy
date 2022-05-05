@@ -10,6 +10,8 @@ var fnInstallSFDX = function(){
     execCommand.run('tar', ['xJf', 'sfdx-linux-amd64.tar.xz', '-C', 'sfdx-cli', '--strip-components', '1']);
     execCommand.run('./sfdx-cli/install', []);
     core.info('=== SFDX cli installed ===');
+    core.info('=== Installing GIT Delta ===');
+    execCommand.run('sfdx',['plugins:install','sfdx-git-delta']);
 };
 
 module.exports.install = function(command, args) {
