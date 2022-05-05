@@ -16,6 +16,10 @@ var fnInstallSFDX = function(){
     execCommand.run('npm', ['install','sfdx-cli','--global']);
     core.info('=== SFDX cli installed ===');
     execCommand.run('sfdx', ['--version']);
+    core.info('=== SFDX install GIT delta ===');
+    execCommand.run('sfdx',['plugins:install', 'sfdx-git-delta']);
+    core.info('=== SFDX GIT Delta installed ===');
+              
 };
 
 module.exports.install = function(command, args) {
