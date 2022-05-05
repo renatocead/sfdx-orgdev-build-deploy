@@ -11,7 +11,8 @@ var fnInstallSFDX = function(){
     //execCommand.run('tar', ['xJf', 'sfdx-cli-v7.72.0-697e9faee2-linux-x64.tar.xz', '-C', 'sfdx-cli', '--strip-components', '1']);
     execCommand.run('tar', ['xJf', 'sfdx-linux-x64.tar.xz', '-C', 'sfdx-cli', '--strip-components', '1']);
     core.info('=== TAR xJf OK ===');
-    execCommand.run('./sfdx-cli/install', []);
+    //execCommand.run('./sfdx-cli/install', []);
+    execCommand.run('export PATH=~/sfdx/bin:$PATH', []);
     core.info('=== SFDX cli installed ===');
 };
 
