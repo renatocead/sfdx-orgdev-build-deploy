@@ -52,17 +52,14 @@ let login = function (cert, login){
 };
 
 let convertion = function(deploy){
-    core.info("=== converting ===");
+    core.info("=== creating package to deploy ===");
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
-    execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
-    core.info("=== converted ===");
-
-    core.info("=== running GIT Delta ===");
-    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error']);
-    execCommand.run('sh', ['-c', 'mv /opt/ready2Deploy/destructiveChanges/ /opt/ready2Deploy/package']);
-    //Move package.xml and destructives to root folder
-    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy']);
-    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/destructiveChanges/destructiveChanges.xml /opt/ready2Deploy']);
+    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
+    execCommand.run('sh', ['-c', 'cd /opt/ready2Deploy']);
+    execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy/output'])
+    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package.xml /opt/ready2Deploy/output']);
+    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/destructiveChanges/destructiveChanges.xml /opt/ready2Deploy/output']);
+    core.info("=== package created ===");
     
 };
 
@@ -80,7 +77,7 @@ let deploy = function (deploy, login){
         manifestTmp = manifestsArray[i];
 
         //var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','--manifest','/opt/ready2Deploy/package/package.xml'];
-        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy'];
+        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy/output'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
