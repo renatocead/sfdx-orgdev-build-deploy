@@ -13588,7 +13588,7 @@ let convertion = function(deploy){
     execCommand.run('sh', ['-c', 'mv /opt/ready2Deploy/destructiveChanges/ /opt/ready2Deploy/package']);
     //Move package.xml and destructives to root folder
     execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy']);
-    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/destructiveChanges/destructivesChanges.xml /opt/ready2Deploy']);
+    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/destructiveChanges/destructiveChanges.xml /opt/ready2Deploy']);
     
 };
 
