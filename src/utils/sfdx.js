@@ -57,14 +57,13 @@ let convertion = function(deploy){
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
     core.info("=== run source convert ===");
     execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
-    core.info("=== Output dir ===");
-    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy']);
     core.info("=== full converted ===");
 
     core.info("=== running GIT Delta ===");
-    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'Develop', '--output', '/opt/ready2Deploy', '--loglevel','error']);
+    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'develop', '--output', '/opt/ready2Deploy', '--loglevel','error']);
     execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy']);
     execCommand.run('sh', ['-c', 'mv /opt/ready2Deploy/destructiveChanges/ /opt/ready2Deploy/package']);
+    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy']);
 };
 
 let deploy = function (deploy, login){
