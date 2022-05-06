@@ -56,9 +56,14 @@ let convertion = function(deploy){
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
     execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
     execCommand.run('sfdx', ['force:source:convert','-r','/opt/ready2Deploy', '-d', '/opt/ready2Deploy/output'])
-    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy/output']);
-    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/destructiveChanges/destructiveChanges.xml /opt/ready2Deploy/output/destructiveChangesPre.xml']);
-    execCommand.run('sh', ['-c', 'ls -R /opt/ready2Deploy/output']);
+    execCommand.run('sh',['-c','rm -rf ./ready2Deploy/output/package.xml']);
+    execCommand.run('sh',['-c','cp -R ./ready2Deploy/output/* ./ready2Deploy/destructiveChanges/']);
+    execCommand.run('sh',['-c','mv -f ./ready2Deploy/package/package.xml ./ready2Deploy/output/']);
+    execCommand.run('sh',['-c','rm -rf ./ready2Deploy/force-app/']);
+    
+    
+  //  execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy/output']);
+  //  execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/destructiveChanges/** /opt/ready2Deploy/output']);
     core.info("=== package created ===");
     
 };
@@ -115,7 +120,7 @@ let destructiveDeploy = function (deploy){
     core.info("=== destructiveDeploy ===");
     if (deploy.destructivePath !== null && deploy.destructivePath !== '') {
         core.info('=== Applying destructive changes ===')
-        var argsDestructive = ['force:mdapi:deploy', '-d', '/opt/ready2Deploy/output', '-u', 'sfdc', '--wait', deploy.deployWaitTime, '-g', '--json'];
+        var argsDestructive = ['force:mdapi:deploy', '-d', '/opt/ready2Deploy/destructiveChanges', '-u', 'sfdc', '--wait', deploy.deployWaitTime, '-g', '--json'];
         if (deploy.checkonly) {
             argsDestructive.push('--checkonly');
         }
