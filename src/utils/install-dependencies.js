@@ -16,7 +16,7 @@ var fnInstallSFDX = function(){
     execCommand.run('npm', ['install','sfdx-cli','--global']);
     core.info('=== SFDX cli installed ===');
     core.info('=== SFDX install GIT delta ===');
-    execCommand.run('sh', ['-c', 'echo "yes" | sfdx plugins:install sfdx-git-delta']);
+    execCommand.run('sh', ['-c', 'echo \'yes\' | sfdx plugins:install sfdx-git-delta']);
     core.info('=== SFDX GIT Delta installed ===');
     execCommand.run('sfdx',['plugins','--core']);
               
