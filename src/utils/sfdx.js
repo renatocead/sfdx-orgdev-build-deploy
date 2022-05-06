@@ -61,8 +61,10 @@ let convertion = function(deploy){
     execCommand.run('sh',['-c','git fetch origin "+refs/heads/*:refs/remotes/origin/*"']);
     execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error']);
     execCommand.run('sh', ['-c', 'mv /opt/ready2Deploy/destructiveChanges/ /opt/ready2Deploy/package']);
-    //Move package.xml
+    //Move package.xml and destructives to root folder
     execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy']);
+    execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/destructiveChanges/destructivesChanges.xml /opt/ready2Deploy']);
+    
 };
 
 let deploy = function (deploy, login){
