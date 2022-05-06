@@ -13583,7 +13583,7 @@ let convertion = function(deploy){
     execCommand.run('sfdx', ['force:source:convert','-r','/opt/ready2Deploy', '-d', '/opt/ready2Deploy/output'])
     execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy/output']);
     execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/destructiveChanges/destructiveChanges.xml /opt/ready2Deploy/output']);
-    execCommand.run('sh', ['-c', 'ls -r /opt/ready2Deploy/output']);
+    execCommand.run('sh', ['-c', 'ls -R /opt/ready2Deploy/output']);
     core.info("=== package created ===");
     
 };
