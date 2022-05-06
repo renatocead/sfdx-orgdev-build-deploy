@@ -13583,7 +13583,6 @@ let convertion = function(deploy){
     core.info("=== converted ===");
 
     core.info("=== running GIT Delta ===");
-    execCommand.run('sh',['-c','git fetch origin "+refs/heads/*:refs/remotes/origin/*"']);
     execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error']);
     execCommand.run('sh', ['-c', 'mv /opt/ready2Deploy/destructiveChanges/ /opt/ready2Deploy/package']);
     //Move package.xml and destructives to root folder
@@ -13606,7 +13605,7 @@ let deploy = function (deploy, login){
         manifestTmp = manifestsArray[i];
 
         //var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','--manifest','/opt/ready2Deploy/package/package.xml'];
-        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy/package'];
+        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
