@@ -13893,7 +13893,7 @@ try {
   sfdx.deploy(deploy, login);
   
   //Destructive deploy
-  //sfdx.destructiveDeploy(deploy);
+  sfdx.destructiveDeploy(deploy);
 
   //Executes data factory script
   //sfdx.dataFactory(deploy);
