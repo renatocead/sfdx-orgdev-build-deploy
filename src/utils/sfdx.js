@@ -54,7 +54,7 @@ let login = function (cert, login){
 let convertion = function(deploy){
     core.info("=== creating package to deploy ===");
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
-    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'feature/us0026', '--from', 'develop', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
+    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
     execCommand.run('sh',['-c', 'ls -R /opt/ready2Deploy']);
     execCommand.run('sfdx', ['force:source:convert','-r','/opt/ready2Deploy', '-d', '/opt/ready2Deploy/output'])
     execCommand.run('sh',['-c','rm -rf /opt/ready2Deploy/output/package.xml']);
