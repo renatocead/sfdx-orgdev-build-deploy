@@ -59,7 +59,7 @@ let convertion = function(deploy){
     execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
     execCommand.run('sh', ['-c', 'cp -R /opt/ready2Deploy ./devops/destructive']);
     execCommand.run('sh', ['-c', 'mv -f ./devops/destructive/destructiveChanges.xml ./devops/destructive/ready2Deploy/destructiveChangesPost.xml']);
-    execCommand.run('sh', ['-c', 'mv -f ./devops/destructive/package.xml ./devops/destructive/ready2Deploy']);
+    //execCommand.run('sh', ['-c', 'mv -f ./devops/destructive/package.xml ./devops/destructive/ready2Deploy']);
     core.info("=== Output dir destructive ===");
     execCommand.run('sh', ['-c', 'ls -R ./devops/destructive']);
     core.info("=== full converted ===");
