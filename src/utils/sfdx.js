@@ -59,7 +59,7 @@ let convertion = function(deploy){
     execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
     execCommand.run('sh', ['-c', 'cp -R /opt/ready2Deploy ./devops/destructive']);
     core.info("=== Output dir destructive ===");
-    execCommand.run('sh', ['-c', 'ls -R /devops/destructive']);
+    execCommand.run('sh', ['-c', 'ls -R ./devops/destructive']);
     core.info("=== full converted ===");
 
     //core.info("=== running GIT Delta ===");
