@@ -55,7 +55,7 @@ let convertion = function(deploy){
     core.info("=== creating package to deploy ===");
     
     execCommand.run('sh',['-c', 'shaFC = git merge-base feature/us0030 develop']);
-    execCommand.run('sh',['-c', 'echo $shaFC']);
+    //execCommand.run('sh',['-c', 'echo $shaFC']);
     
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
     execCommand.run('sfdx', ['sgd:source:delta', '--to', 'd28848ee93bd7b2df0104d2caa4585b0b511d938', '--from', 'HEAD', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
