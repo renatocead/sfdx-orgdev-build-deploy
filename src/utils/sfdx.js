@@ -57,7 +57,7 @@ let convertion = function(deploy){
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
     core.info("=== run source convert ===");
     execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
-    execCommand.run('sfdx', ['-c', 'cp -R /opt/ready2Deploy /devops/destructive']);
+    execCommand.run('sfdx', ['-c', 'cp -R /opt/ready2Deploy ./devops/destructive']);
     core.info("=== Output dir destructive ===");
     execCommand.run('sh', ['-c', 'ls -R /devops/destructive']);
     core.info("=== full converted ===");
