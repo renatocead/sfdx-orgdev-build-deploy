@@ -13579,11 +13579,11 @@ let login = function (cert, login){
 let convertion = function(deploy){
     core.info("=== creating package to deploy ===");
     
-    execCommand.run('sh',['-c', 'echo $(git merge-base feature/us0026 develop)']);
+    //execCommand.run('sh',['-c', 'echo $(git merge-base feature/us0026 develop)']);
     //execCommand.run('sh',['-c', 'echo $shaFC']);
     
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
-    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'echo $(git merge-base feature/us0030 develop)', '--from', 'HEAD', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
+    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
     execCommand.run('sh',['-c', 'ls -R /opt/ready2Deploy']);
     execCommand.run('sfdx', ['force:source:convert','-r','/opt/ready2Deploy', '-d', '/opt/ready2Deploy/output'])
     execCommand.run('sh',['-c','rm -rf /opt/ready2Deploy/output/package.xml']);
