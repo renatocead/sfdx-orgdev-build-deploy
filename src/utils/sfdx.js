@@ -1,4 +1,5 @@
 const core = require('@actions/core')
+const path = require('path');
 const execCommand = require('./exec-command.js');
 const fs = require('fs');
 const xml2js = require('xml2js');
@@ -42,7 +43,6 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
 
 let login = function (cert, login){
     core.info("=== login ===");
-    core.debug('=== Decrypting certificate');
     execCommand.run('openssl', ['enc', '-nosalt', '-aes-256-cbc', '-d', '-in', cert.certificatePath, '-out', 'server.key', '-base64', '-K', cert.decryptionKey, '-iv', cert.decryptionIV]);
 
     core.info('==== Authenticating in the target org');
@@ -51,17 +51,35 @@ let login = function (cert, login){
     execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', login.username, '--setalias', 'sfdc']);
 };
 
-let deploy = function (deploy){
+let convertion = function(deploy){
+    core.info("=== converting ===");
+    core.info("=== creating dir ===");
+    execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
+    core.info("=== run source convert ===");
+    execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
+    core.info("=== Output dir ===");
+    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy']);
+    core.info("=== full converted ===");
+
+    //core.info("=== running GIT Delta ===");
+    //execCommand.run('sfdx', ['sgd:source:delta --to Develop --from feature/us0011 --output /opt/ready2Deploy']);
+};
+
+let deploy = function (deploy, login){
     core.info("=== deploy ===");
 
     var manifestsArray = deploy.manifestToDeploy.split(",");
+    //var sfdxRootFolder = deploy.sfdxRootFolder;
+    var sfdxRootFolder = '/opt/ready2Deploy';
+    
     var manifestTmp;
     var testClassesTmp;
 
     for(var i = 0; i < manifestsArray.length; i++){
         manifestTmp = manifestsArray[i];
 
-        var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json'];
+        //var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','--manifest','/opt/ready2Deploy/package/package.xml'];
+        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy/'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
@@ -69,9 +87,12 @@ let deploy = function (deploy){
         }
 
         if(deploy.testlevel == "RunSpecifiedTests"){
-            testClassesTmp = getApexTestClass(manifestTmp, deploy.defaultSourcePath+'/classes', deploy.defaultTestClass);
+            testClassesTmp = getApexTestClass(
+                sfdxRootFolder ? path.join(sfdxRootFolder, manifestTmp) : manifestTmp, 
+                sfdxRootFolder ? path.join(sfdxRootFolder, deploy.defaultSourcePath, 'classes') : path.join(deploy.defaultSourcePath, 'classes'),
+                deploy.defaultTestClass);
 
-            core.info("las clases son : "  + testClassesTmp);
+            core.info("classes are : "  + testClassesTmp);
             
             if(testClassesTmp){
                 argsDeploy.push("--testlevel");
@@ -88,7 +109,7 @@ let deploy = function (deploy){
             argsDeploy.push(deploy.testlevel);
         }
 
-        execCommand.run('sfdx', argsDeploy);
+        execCommand.run('sfdx', argsDeploy, sfdxRootFolder);
     }
 };
 
@@ -112,7 +133,7 @@ let dataFactory = function (deploy){
     }
 };
 
-
+module.exports.convertion = convertion;
 module.exports.deploy = deploy;
 module.exports.login = login;
 module.exports.destructiveDeploy = destructiveDeploy;
