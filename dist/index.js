@@ -13577,25 +13577,17 @@ let login = function (cert, login){
 };
 
 let convertion = function(deploy){
-    core.info("=== creating package to deploy ===");
-    
-    //execCommand.run('sh',['-c', 'echo $(git merge-base feature/us0026 develop)']);
-    //execCommand.run('sh',['-c', 'echo $shaFC']);
-    
+    core.info("=== converting ===");
+    core.info("=== creating dir ===");
     execCommand.run('sh', ['-c', 'mkdir /opt/ready2Deploy']);
-    execCommand.run('sfdx', ['sgd:source:delta', '--to', 'HEAD', '--from', 'HEAD^', '--output', '/opt/ready2Deploy', '--loglevel','error', '-d']);
-    execCommand.run('sh',['-c', 'ls -R /opt/ready2Deploy']);
-    execCommand.run('sfdx', ['force:source:convert','-r','/opt/ready2Deploy', '-d', '/opt/ready2Deploy/output'])
-    execCommand.run('sh',['-c','rm -rf /opt/ready2Deploy/output/package.xml']);
-    execCommand.run('sh',['-c','cp -R /opt/ready2Deploy/output/* /opt/ready2Deploy/destructiveChanges/']);
-    execCommand.run('sh',['-c','mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy/output/']);
-    execCommand.run('sh',['-c','rm -rf /opt/ready2Deploy/force-app/']);
-    
-    
-  //  execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/package/package.xml /opt/ready2Deploy/output']);
-  //  execCommand.run('sh', ['-c', 'mv -f /opt/ready2Deploy/destructiveChanges/** /opt/ready2Deploy/output']);
-    core.info("=== package created ===");
-    
+    core.info("=== run source convert ===");
+    execCommand.run('sfdx', ['force:source:convert', '-d', '/opt/ready2Deploy'])
+    core.info("=== Output dir ===");
+    execCommand.run('sh', ['-c', 'ls /opt/ready2Deploy']);
+    core.info("=== full converted ===");
+
+    //core.info("=== running GIT Delta ===");
+    //execCommand.run('sfdx', ['sgd:source:delta --to Develop --from feature/us0011 --output /opt/ready2Deploy']);
 };
 
 let deploy = function (deploy, login){
@@ -13612,7 +13604,7 @@ let deploy = function (deploy, login){
         manifestTmp = manifestsArray[i];
 
         //var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','--manifest','/opt/ready2Deploy/package/package.xml'];
-        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy/output'];
+        var argsDeploy = ['force:mdapi:deploy', '--wait', deploy.deployWaitTime, '--targetusername', login.username, '--json','-d', '/opt/ready2Deploy/'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
@@ -13650,7 +13642,7 @@ let destructiveDeploy = function (deploy){
     core.info("=== destructiveDeploy ===");
     if (deploy.destructivePath !== null && deploy.destructivePath !== '') {
         core.info('=== Applying destructive changes ===')
-        var argsDestructive = ['force:mdapi:deploy', '-d', '/opt/ready2Deploy/destructiveChanges', '-u', 'sfdc', '--wait', deploy.deployWaitTime, '-g', '--json'];
+        var argsDestructive = ['force:mdapi:deploy', '-d', deploy.destructivePath, '-u', 'sfdc', '--wait', deploy.deployWaitTime, '-g', '--json'];
         if (deploy.checkonly) {
             argsDestructive.push('--checkonly');
         }
